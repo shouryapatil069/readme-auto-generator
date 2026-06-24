@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [selectedTemplate, setSelectedTemplate] = useState('minimal');
+  const [selectedTemplate, setSelectedTemplate] = useState('professional');
   const [formData, setFormData] = useState({
     projectName: '',
     description: '',
@@ -16,7 +16,12 @@ function App() {
     futureEnhancements: '',
     author: '',
     whyUseful: '',
-    exampleUsage: ''
+    exampleUsage: '',
+    liveDemo: '',
+    githubRepo: '',
+    issues: '',
+    pullRequests: '',
+    whatILearned: ''
   });
   const [readmeContent, setReadmeContent] = useState('');
   const [error, setError] = useState('');
@@ -35,7 +40,12 @@ function App() {
     futureEnhancements: '- Add dark mode\n- Support more languages',
     author: 'Jane Doe',
     whyUseful: 'It saves 10 hours a week for developers.',
-    exampleUsage: 'import { awesome } from "awesome-project";\n\nawesome();'
+    exampleUsage: 'import { awesome } from "awesome-project";\n\nawesome();',
+    liveDemo: 'https://awesome-project-demo.com',
+    githubRepo: 'https://github.com/janedoe/awesome-project',
+    issues: 'For major changes, please open an issue first to discuss what you would like to change.',
+    pullRequests: 'Please make sure to update tests as appropriate.',
+    whatILearned: 'I learned how to build a robust React application.'
   };
 
   const handleChange = (e) => {
@@ -68,6 +78,10 @@ function App() {
 
 ${formData.description}
 
+## Tech Stack
+
+${formData.techStack || '- Technology 1\n- Technology 2'}
+
 ## Installation
 
 \`\`\`bash
@@ -79,6 +93,14 @@ ${formData.installation || 'npm install'}
 \`\`\`bash
 ${formData.usage || 'npm start'}
 \`\`\`
+
+## Author
+
+**${formData.author || 'Your Name'}**
+
+## License
+
+This project is licensed under the ${formData.license} License.
 `;
     } else if (selectedTemplate === 'professional') {
       content = `# ${formData.projectName}
@@ -105,15 +127,25 @@ ${formData.installation || 'npm install'}
 ${formData.usage || 'npm start'}
 \`\`\`
 
-## Folder Structure
+## Screenshots
 
-\`\`\`
-${formData.folderStructure || 'src/\n├── index.js\n└── styles.css'}
-\`\`\`
+![App Screenshot](https://via.placeholder.com/800x400)
+
+## Live Demo
+
+[Live Demo](${formData.liveDemo || 'https://your-demo-link.com'})
+
+## GitHub Repository
+
+[Repository](${formData.githubRepo || 'https://github.com/yourusername/repo'})
 
 ## Future Enhancements
 
 ${formData.futureEnhancements || '- Planned feature 1\n- Planned feature 2'}
+
+## Author
+
+**${formData.author || 'Your Name'}**
 
 ## License
 
@@ -148,6 +180,14 @@ ${formData.usage || 'npm start'}
 
 ${formData.contributing || 'Contributions are always welcome! Please read the contribution guidelines first.'}
 
+## Issues
+
+${formData.issues || 'Please use the issue tracker to report any bugs or file feature requests.'}
+
+## Pull Requests
+
+${formData.pullRequests || 'PRs are welcome. Make sure to follow the code style of the project.'}
+
 ## License
 
 This project is licensed under the ${formData.license} License.
@@ -167,13 +207,17 @@ ${formData.description}
 
 ${formData.whyUseful || 'It helps solve a common problem easily without complex setup.'}
 
+## Tech Stack
+
+${formData.techStack || '- Technology 1\n- Technology 2'}
+
 ## How to install
 
 \`\`\`bash
 ${formData.installation || 'npm install'}
 \`\`\`
 
-## How to run
+## How to use
 
 \`\`\`bash
 ${formData.usage || 'npm start'}
@@ -185,9 +229,17 @@ ${formData.usage || 'npm start'}
 ${formData.exampleUsage || '// write your example code here\nconsole.log("Hello World");'}
 \`\`\`
 
+## What I learned
+
+${formData.whatILearned || 'I learned a lot about React and state management while building this project.'}
+
 ## Future improvements
 
 ${formData.futureEnhancements || '- Make it even simpler\n- Add more tutorials'}
+
+## Author
+
+**${formData.author || 'Your Name'}**
 `;
     }
 
@@ -209,7 +261,12 @@ ${formData.futureEnhancements || '- Make it even simpler\n- Add more tutorials'}
       futureEnhancements: '',
       author: '',
       whyUseful: '',
-      exampleUsage: ''
+      exampleUsage: '',
+      liveDemo: '',
+      githubRepo: '',
+      issues: '',
+      pullRequests: '',
+      whatILearned: ''
     });
     setReadmeContent('');
     setError('');
@@ -242,14 +299,19 @@ ${formData.futureEnhancements || '- Make it even simpler\n- Add more tutorials'}
   };
 
   const showFeatures = selectedTemplate === 'professional' || selectedTemplate === 'opensource';
-  const showTechStack = selectedTemplate === 'professional' || selectedTemplate === 'opensource';
-  const showFolderStructure = selectedTemplate === 'professional';
+  const showTechStack = true;
+  const showFolderStructure = false;
   const showFutureEnhancements = selectedTemplate === 'professional' || selectedTemplate === 'beginner';
-  const showLicense = selectedTemplate === 'professional' || selectedTemplate === 'opensource';
+  const showLicense = selectedTemplate !== 'beginner';
+  const showAuthor = true;
+  const showLiveDemo = selectedTemplate === 'professional';
+  const showGithubRepo = selectedTemplate === 'professional';
   const showContributing = selectedTemplate === 'opensource';
-  const showAuthor = selectedTemplate === 'opensource';
+  const showIssues = selectedTemplate === 'opensource';
+  const showPullRequests = selectedTemplate === 'opensource';
   const showWhyUseful = selectedTemplate === 'beginner';
   const showExampleUsage = selectedTemplate === 'beginner';
+  const showWhatILearned = selectedTemplate === 'beginner';
 
   const descLabel = selectedTemplate === 'beginner' ? 'What this project does' : 'Description';
   const descPlaceholder = selectedTemplate === 'beginner' ? 'Explain simply what this project is...' : 'A short and catchy description of your project...';
@@ -385,6 +447,34 @@ ${formData.futureEnhancements || '- Make it even simpler\n- Add more tutorials'}
             />
           </div>
 
+          {showLiveDemo && (
+            <div className="form-group">
+              <label htmlFor="liveDemo">Live Demo Link</label>
+              <input
+                type="text"
+                id="liveDemo"
+                name="liveDemo"
+                value={formData.liveDemo}
+                onChange={handleChange}
+                placeholder="e.g., https://my-awesome-app.com"
+              />
+            </div>
+          )}
+
+          {showGithubRepo && (
+            <div className="form-group">
+              <label htmlFor="githubRepo">GitHub Repository Link</label>
+              <input
+                type="text"
+                id="githubRepo"
+                name="githubRepo"
+                value={formData.githubRepo}
+                onChange={handleChange}
+                placeholder="e.g., https://github.com/username/repo"
+              />
+            </div>
+          )}
+
           {showExampleUsage && (
             <div className="form-group">
               <label htmlFor="exampleUsage">Example usage</label>
@@ -399,15 +489,15 @@ ${formData.futureEnhancements || '- Make it even simpler\n- Add more tutorials'}
             </div>
           )}
 
-          {showFolderStructure && (
+          {showWhatILearned && (
             <div className="form-group">
-              <label htmlFor="folderStructure">Folder Structure</label>
+              <label htmlFor="whatILearned">What I Learned</label>
               <textarea
-                id="folderStructure"
-                name="folderStructure"
-                value={formData.folderStructure}
+                id="whatILearned"
+                name="whatILearned"
+                value={formData.whatILearned}
                 onChange={handleChange}
-                placeholder="src/&#10;├── components/&#10;└── utils/"
+                placeholder="e.g., I learned how to build a robust React application."
                 rows="3"
               />
             </div>
@@ -436,6 +526,34 @@ ${formData.futureEnhancements || '- Make it even simpler\n- Add more tutorials'}
                 value={formData.contributing}
                 onChange={handleChange}
                 placeholder="How can others contribute to your project?"
+                rows="2"
+              />
+            </div>
+          )}
+
+          {showIssues && (
+            <div className="form-group">
+              <label htmlFor="issues">Issues</label>
+              <textarea
+                id="issues"
+                name="issues"
+                value={formData.issues}
+                onChange={handleChange}
+                placeholder="Please use the issue tracker to report any bugs..."
+                rows="2"
+              />
+            </div>
+          )}
+
+          {showPullRequests && (
+            <div className="form-group">
+              <label htmlFor="pullRequests">Pull Requests Note</label>
+              <textarea
+                id="pullRequests"
+                name="pullRequests"
+                value={formData.pullRequests}
+                onChange={handleChange}
+                placeholder="PRs are welcome. Make sure to follow the code style..."
                 rows="2"
               />
             </div>
