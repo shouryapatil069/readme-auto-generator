@@ -203,6 +203,7 @@ function App() {
   const [readmeContent, setReadmeContent] = useState('');
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+  const [fileName, setFileName] = useState('');
 
   const exampleData = {
     projectName: 'Awesome Project',
@@ -294,11 +295,19 @@ function App() {
 
   const handleDownload = () => {
     if (!readmeContent) return;
+    
+    let finalFileName = fileName.trim();
+    if (!finalFileName) {
+      finalFileName = 'README.md';
+    } else if (!finalFileName.endsWith('.md')) {
+      finalFileName += '.md';
+    }
+
     const blob = new Blob([readmeContent], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'README.md';
+    a.download = finalFileName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -604,9 +613,16 @@ function App() {
         </div>
 
         <div className="preview-section">
-          <div className="section-header">
+          <div className="section-header" style={{ marginBottom: '0.5rem' }}>
             <h2>Preview</h2>
-            <div className="header-actions">
+            <div className="header-actions" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+              <input
+                type="text"
+                placeholder="README.md"
+                value={fileName}
+                onChange={(e) => setFileName(e.target.value)}
+                style={{ padding: '5px 10px', width: '160px', fontSize: '14px', margin: 0 }}
+              />
               <button 
                 className={`btn btn-secondary ${!readmeContent ? 'disabled' : ''}`}
                 onClick={handleCopy}
@@ -623,6 +639,9 @@ function App() {
               </button>
             </div>
           </div>
+          <p className="hint" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '1rem', marginTop: 0, textAlign: 'right' }}>
+            Your README will be downloaded as a Markdown (.md) file.
+          </p>
           
           <div className="preview-content markdown-body">
             <ReactMarkdown>{liveContent}</ReactMarkdown>
