@@ -607,6 +607,42 @@ function App() {
             </div>
           )}
 
+          <div className="checklist-panel">
+            <h3>
+              README Quality Score: {
+                [
+                  { completed: !!formData.projectName.trim(), show: true },
+                  { completed: !!formData.description.trim(), show: true },
+                  { completed: !!formData.installation.trim(), show: true },
+                  { completed: !!formData.usage.trim(), show: true },
+                  { completed: !!formData.features.trim(), show: showFeatures },
+                  { completed: !!formData.techStack.trim(), show: showTechStack },
+                  { completed: formData.license !== 'None', show: showLicense },
+                ].filter(i => i.show && i.completed).length
+              }/{
+                [
+                  { show: true }, { show: true }, { show: true }, { show: true },
+                  { show: showFeatures }, { show: showTechStack }, { show: showLicense },
+                ].filter(i => i.show).length
+              }
+            </h3>
+            <ul className="checklist">
+              {[
+                { label: 'Project name added', completed: !!formData.projectName.trim(), show: true },
+                { label: 'Description added', completed: !!formData.description.trim(), show: true },
+                { label: 'Installation instructions added', completed: !!formData.installation.trim(), show: true },
+                { label: 'Usage instructions added', completed: !!formData.usage.trim(), show: true },
+                { label: 'Features added', completed: !!formData.features.trim(), show: showFeatures },
+                { label: 'Tech stack added', completed: !!formData.techStack.trim(), show: showTechStack },
+                { label: 'License selected', completed: formData.license !== 'None', show: showLicense },
+              ].filter(item => item.show).map((item, idx) => (
+                <li key={idx} className={item.completed ? 'completed' : 'pending'}>
+                  <span className="icon">{item.completed ? '✅' : '❌'}</span> {item.label}
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <button className="btn btn-primary generate-btn" onClick={handleGenerate}>
             Generate README
           </button>
