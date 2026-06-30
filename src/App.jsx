@@ -1,5 +1,182 @@
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import './App.css';
+
+const generateMarkdown = (selectedTemplate, formData) => {
+  let content = '';
+
+  if (selectedTemplate === 'minimal') {
+    content = `# ${formData.projectName || 'Project Title'}
+
+${formData.description || 'Project description...'}
+
+## Tech Stack
+
+${formData.techStack || '- Technology 1\n- Technology 2'}
+
+## Installation
+
+\`\`\`bash
+${formData.installation || 'npm install'}
+\`\`\`
+
+## Usage
+
+\`\`\`bash
+${formData.usage || 'npm start'}
+\`\`\`
+
+## Author
+
+**${formData.author || 'Your Name'}**
+
+## License
+
+This project is licensed under the ${formData.license} License.
+`;
+  } else if (selectedTemplate === 'professional') {
+    content = `# ${formData.projectName || 'Project Title'}
+
+${formData.description || 'Project description...'}
+
+## Features
+
+${formData.features || '- Feature 1\n- Feature 2\n- Feature 3'}
+
+## Tech Stack
+
+${formData.techStack || '- Technology 1\n- Technology 2'}
+
+## Installation
+
+\`\`\`bash
+${formData.installation || 'npm install'}
+\`\`\`
+
+## Usage
+
+\`\`\`bash
+${formData.usage || 'npm start'}
+\`\`\`
+
+## Screenshots
+
+![App Screenshot](https://via.placeholder.com/800x400)
+
+## Live Demo
+
+[Live Demo](${formData.liveDemo || 'https://your-demo-link.com'})
+
+## GitHub Repository
+
+[Repository](${formData.githubRepo || 'https://github.com/yourusername/repo'})
+
+## Future Enhancements
+
+${formData.futureEnhancements || '- Planned feature 1\n- Planned feature 2'}
+
+## Author
+
+**${formData.author || 'Your Name'}**
+
+## License
+
+This project is licensed under the ${formData.license} License.
+`;
+  } else if (selectedTemplate === 'opensource') {
+    content = `# ${formData.projectName || 'Project Title'}
+
+${formData.description || 'Project description...'}
+
+## Features
+
+${formData.features || '- Feature 1\n- Feature 2\n- Feature 3'}
+
+## Tech Stack
+
+${formData.techStack || '- Technology 1\n- Technology 2'}
+
+## Installation
+
+\`\`\`bash
+${formData.installation || 'npm install'}
+\`\`\`
+
+## Usage
+
+\`\`\`bash
+${formData.usage || 'npm start'}
+\`\`\`
+
+## Contributing
+
+${formData.contributing || 'Contributions are always welcome! Please read the contribution guidelines first.'}
+
+## Issues
+
+${formData.issues || 'Please use the issue tracker to report any bugs or file feature requests.'}
+
+## Pull Requests
+
+${formData.pullRequests || 'PRs are welcome. Make sure to follow the code style of the project.'}
+
+## License
+
+This project is licensed under the ${formData.license} License.
+
+## Author
+
+**${formData.author || 'Your Name'}**
+`;
+  } else if (selectedTemplate === 'beginner') {
+    content = `# ${formData.projectName || 'Project Title'}
+
+## What this project does
+
+${formData.description || 'Project description...'}
+
+## Why it is useful
+
+${formData.whyUseful || 'It helps solve a common problem easily without complex setup.'}
+
+## Tech Stack
+
+${formData.techStack || '- Technology 1\n- Technology 2'}
+
+## How to install
+
+\`\`\`bash
+${formData.installation || 'npm install'}
+\`\`\`
+
+## How to use
+
+\`\`\`bash
+${formData.usage || 'npm start'}
+\`\`\`
+
+## Example usage
+
+\`\`\`javascript
+${formData.exampleUsage || '// write your example code here\nconsole.log("Hello World");'}
+\`\`\`
+
+## What I learned
+
+${formData.whatILearned || 'I learned a lot about React and state management while building this project.'}
+
+## Future improvements
+
+${formData.futureEnhancements || '- Make it even simpler\n- Add more tutorials'}
+
+## Author
+
+**${formData.author || 'Your Name'}**
+`;
+  }
+
+  return content;
+};
 
 function App() {
   const [selectedTemplate, setSelectedTemplate] = useState('professional');
@@ -60,6 +237,8 @@ function App() {
     }
   };
 
+  const liveContent = generateMarkdown(selectedTemplate, formData);
+
   const handleGenerate = () => {
     if (!formData.projectName.trim()) {
       setError('Please enter your project name.');
@@ -71,179 +250,7 @@ function App() {
     }
     setError('');
 
-    let content = '';
-
-    if (selectedTemplate === 'minimal') {
-      content = `# ${formData.projectName}
-
-${formData.description}
-
-## Tech Stack
-
-${formData.techStack || '- Technology 1\n- Technology 2'}
-
-## Installation
-
-\`\`\`bash
-${formData.installation || 'npm install'}
-\`\`\`
-
-## Usage
-
-\`\`\`bash
-${formData.usage || 'npm start'}
-\`\`\`
-
-## Author
-
-**${formData.author || 'Your Name'}**
-
-## License
-
-This project is licensed under the ${formData.license} License.
-`;
-    } else if (selectedTemplate === 'professional') {
-      content = `# ${formData.projectName}
-
-${formData.description}
-
-## Features
-
-${formData.features || '- Feature 1\n- Feature 2\n- Feature 3'}
-
-## Tech Stack
-
-${formData.techStack || '- Technology 1\n- Technology 2'}
-
-## Installation
-
-\`\`\`bash
-${formData.installation || 'npm install'}
-\`\`\`
-
-## Usage
-
-\`\`\`bash
-${formData.usage || 'npm start'}
-\`\`\`
-
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/800x400)
-
-## Live Demo
-
-[Live Demo](${formData.liveDemo || 'https://your-demo-link.com'})
-
-## GitHub Repository
-
-[Repository](${formData.githubRepo || 'https://github.com/yourusername/repo'})
-
-## Future Enhancements
-
-${formData.futureEnhancements || '- Planned feature 1\n- Planned feature 2'}
-
-## Author
-
-**${formData.author || 'Your Name'}**
-
-## License
-
-This project is licensed under the ${formData.license} License.
-`;
-    } else if (selectedTemplate === 'opensource') {
-      content = `# ${formData.projectName}
-
-${formData.description}
-
-## Features
-
-${formData.features || '- Feature 1\n- Feature 2\n- Feature 3'}
-
-## Tech Stack
-
-${formData.techStack || '- Technology 1\n- Technology 2'}
-
-## Installation
-
-\`\`\`bash
-${formData.installation || 'npm install'}
-\`\`\`
-
-## Usage
-
-\`\`\`bash
-${formData.usage || 'npm start'}
-\`\`\`
-
-## Contributing
-
-${formData.contributing || 'Contributions are always welcome! Please read the contribution guidelines first.'}
-
-## Issues
-
-${formData.issues || 'Please use the issue tracker to report any bugs or file feature requests.'}
-
-## Pull Requests
-
-${formData.pullRequests || 'PRs are welcome. Make sure to follow the code style of the project.'}
-
-## License
-
-This project is licensed under the ${formData.license} License.
-
-## Author
-
-**${formData.author || 'Your Name'}**
-`;
-    } else if (selectedTemplate === 'beginner') {
-      content = `# ${formData.projectName}
-
-## What this project does
-
-${formData.description}
-
-## Why it is useful
-
-${formData.whyUseful || 'It helps solve a common problem easily without complex setup.'}
-
-## Tech Stack
-
-${formData.techStack || '- Technology 1\n- Technology 2'}
-
-## How to install
-
-\`\`\`bash
-${formData.installation || 'npm install'}
-\`\`\`
-
-## How to use
-
-\`\`\`bash
-${formData.usage || 'npm start'}
-\`\`\`
-
-## Example usage
-
-\`\`\`javascript
-${formData.exampleUsage || '// write your example code here\nconsole.log("Hello World");'}
-\`\`\`
-
-## What I learned
-
-${formData.whatILearned || 'I learned a lot about React and state management while building this project.'}
-
-## Future improvements
-
-${formData.futureEnhancements || '- Make it even simpler\n- Add more tutorials'}
-
-## Author
-
-**${formData.author || 'Your Name'}**
-`;
-    }
-
-    setReadmeContent(content);
+    setReadmeContent(liveContent);
     setCopied(false);
   };
 
@@ -617,15 +624,8 @@ ${formData.futureEnhancements || '- Make it even simpler\n- Add more tutorials'}
             </div>
           </div>
           
-          <div className="preview-content">
-            {readmeContent ? (
-              <pre><code>{readmeContent}</code></pre>
-            ) : (
-              <div className="empty-preview">
-                <p>Your generated README will appear here.</p>
-                <p className="hint">Fill out the form and click "Generate README".</p>
-              </div>
-            )}
+          <div className="preview-content markdown-body">
+            <ReactMarkdown>{liveContent}</ReactMarkdown>
           </div>
         </div>
       </div>
